@@ -890,3 +890,14 @@ button:disabled {
     }
 
 }
+
+/* Ajuste do formulário de logout na navbar */
+
+.main-nav .inline-form {
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav .inline-form button {
+    white-space: nowrap;
+}

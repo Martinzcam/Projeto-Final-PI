@@ -14,69 +14,46 @@
 
 </div>
 
-
 <form method="POST" class="auth-form">
 
     {% csrf_token %}
 
-    <label for="username">
-        Nome de usuário
-    </label>
+    {{ form.non_field_errors }}
 
-    <input
-        type="text"
-        id="username"
-        name="username"
-        placeholder="Escolha um nome de usuário"
-        autocomplete="username"
+    {% for field in form %}
+
+        <div class="form-field">
+
+            {{ field.label_tag }}
+
+            {{ field }}
+
+            {% if field.help_text %}
+                <div class="helptext">
+                    {{ field.help_text }}
+                </div>
+            {% endif %}
+
+            {% for error in field.errors %}
+
+                <p class="message error">
+                    {{ error }}
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    {% endfor %}
+
+    <button
+        type="submit"
+        class="button button-primary"
     >
-
-
-    <label for="email">
-        E-mail
-    </label>
-
-    <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="Digite seu e-mail"
-        autocomplete="email"
-    >
-
-
-    <label for="password1">
-        Senha
-    </label>
-
-    <input
-        type="password"
-        id="password1"
-        name="password1"
-        placeholder="Crie uma senha"
-        autocomplete="new-password"
-    >
-
-
-    <label for="password2">
-        Confirmar senha
-    </label>
-
-    <input
-        type="password"
-        id="password2"
-        name="password2"
-        placeholder="Digite novamente sua senha"
-        autocomplete="new-password"
-    >
-
-
-    <button type="submit" class="button button-primary">
         Criar minha conta
     </button>
 
 </form>
-
 
 <p style="text-align: center;">
 
