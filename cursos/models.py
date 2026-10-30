@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Curso(models.Model):
@@ -9,6 +10,7 @@ class Curso(models.Model):
 
     def __str__(self):
         return self.titulo
+
 
 class Modulo(models.Model):
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
@@ -29,3 +31,28 @@ class Aula(models.Model):
 
     def __str__(self):
         return self.titulo
+
+
+class Inscricao(models.Model):
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    curso = models.ForeignKey(
+        Curso,
+        on_delete=models.CASCADE
+    )
+
+    data_inscricao = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['usuario', 'curso'],
+                name='inscricao_unica_por_usuario_curso'
+            )
+        ]
+
+    def __str__(self):
+        return f'{self.usuario.username} - {self.curso.titulo}'
