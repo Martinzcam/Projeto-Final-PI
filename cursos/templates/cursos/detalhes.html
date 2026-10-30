@@ -6,32 +6,6 @@
 
 <p>{{ curso.descricao }}</p>
 
-<hr>
-
-<h3>Inscrição no curso</h3>
-
-{% if user.is_authenticated %}
-
-    <form method="POST" action="{% url 'inscrever' curso.id %}">
-        {% csrf_token %}
-
-        <button type="submit">
-            Inscrever-se
-        </button>
-    </form>
-
-{% else %}
-
-    <p>
-        Você precisa estar autenticado para se inscrever.
-    </p>
-
-    <a href="{% url 'login' %}">Fazer login</a>
-
-{% endif %}
-
-<hr>
-
 <p>
     <a href="{% url 'catalogo' %}">Voltar ao catálogo</a>
 </p>
