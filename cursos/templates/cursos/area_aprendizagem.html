@@ -10,23 +10,27 @@
 
 <hr>
 
-<h3>Conteúdo do curso</h3>
+<h3>Módulos do curso</h3>
 
 {% for modulo in modulos %}
 
     <div class="modulo">
 
-        <h3>{{ modulo.titulo }}</h3>
+        <h3>
+            Módulo {{ modulo.ordem }} - {{ modulo.titulo }}
+        </h3>
 
         <p>{{ modulo.descricao }}</p>
 
-        <h4>Aulas deste módulo:</h4>
+        <p>
+            <strong>Aulas deste módulo:</strong>
+        </p>
 
         {% for aula in modulo.aula_set.all %}
 
             <p>
                 <a href="{% url 'detalhe_aula' aula.id %}">
-                    {{ aula.titulo }}
+                    Aula {{ aula.ordem }} - {{ aula.titulo }}
                 </a>
             </p>
 
@@ -35,6 +39,12 @@
             <p>Este módulo ainda não possui aulas.</p>
 
         {% endfor %}
+
+        <p>
+            <a href="{% url 'detalhe_modulo' modulo.id %}">
+                Abrir módulo
+            </a>
+        </p>
 
     </div>
 

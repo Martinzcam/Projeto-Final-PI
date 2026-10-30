@@ -4,11 +4,33 @@
 
 {% block content %}
 
-<h2>{{ aula.titulo }}</h2>
+<h2>{{ curso.titulo }}</h2>
 
-<h3>{{ curso.titulo }}</h3>
+<p>
+    <a href="{% url 'area_aprendizagem' curso.id %}">
+        Voltar para os módulos
+    </a>
+</p>
+
+<p>
+    <a href="{% url 'detalhe_modulo' modulo.id %}">
+        Voltar para {{ modulo.titulo }}
+    </a>
+</p>
 
 <hr>
+
+<h3>
+    {{ aula.titulo }}
+</h3>
+
+<p>
+    <strong>Módulo:</strong> {{ modulo.titulo }}
+</p>
+
+<hr>
+
+<h3>Conteúdo da aula</h3>
 
 <div class="conteudo-aula">
 
@@ -22,16 +44,44 @@
 
     <h3>Vídeo da aula</h3>
 
-    <a href="{{ aula.video_url }}" target="_blank" rel="noopener noreferrer">
-        Assistir vídeo
+    <p>
+        <a href="{{ aula.video_url }}"
+           target="_blank"
+           rel="noopener noreferrer">
+
+            Assistir vídeo da aula
+
+        </a>
+    </p>
+
+{% endif %}
+
+<hr>
+
+<h3>Navegação entre aulas</h3>
+
+{% if aula_anterior %}
+
+    <a href="{% url 'detalhe_aula' aula_anterior.id %}">
+        ← {{ aula_anterior.titulo }}
+    </a>
+
+{% endif %}
+
+{% if proxima_aula %}
+
+    <a href="{% url 'detalhe_aula' proxima_aula.id %}">
+        {{ proxima_aula.titulo }} →
     </a>
 
 {% endif %}
 
 <hr>
 
-<a href="{% url 'area_aprendizagem' curso.id %}">
-    Voltar para o conteúdo do curso
-</a>
+<p>
+    <a href="{% url 'meus_cursos' %}">
+        Voltar para meus cursos
+    </a>
+</p>
 
 {% endblock %}

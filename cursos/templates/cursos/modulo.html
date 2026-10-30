@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ modulo.titulo }} | Estude Mais{% endblock %}
+
+{% block content %}
+
+<h2>{{ curso.titulo }}</h2>
+
+<p>
+    <a href="{% url 'area_aprendizagem' curso.id %}">
+        Voltar para os módulos do curso
+    </a>
+</p>
+
+<hr>
+
+<h3>
+    Módulo {{ modulo.ordem }} - {{ modulo.titulo }}
+</h3>
+
+<p>{{ modulo.descricao }}</p>
+
+<hr>
+
+<h3>Aulas deste módulo</h3>
+
+{% for aula in aulas %}
+
+    <div class="aula">
+
+        <h4>
+            Aula {{ aula.ordem }} - {{ aula.titulo }}
+        </h4>
+
+        <a href="{% url 'detalhe_aula' aula.id %}">
+            Acessar aula
+        </a>
+
+    </div>
+
+    <hr>
+
+{% empty %}
+
+    <p>Este módulo ainda não possui aulas cadastradas.</p>
+
+{% endfor %}
+
+<h3>Navegação entre módulos</h3>
+
+{% if modulo_anterior %}
+
+    <a href="{% url 'detalhe_modulo' modulo_anterior.id %}">
+        ← Módulo anterior
+    </a>
+
+{% endif %}
+
+{% if proximo_modulo %}
+
+    <a href="{% url 'detalhe_modulo' proximo_modulo.id %}">
+        Próximo módulo →
+    </a>
+
+{% endif %}
+
+<hr>
+
+<a href="{% url 'meus_cursos' %}">
+    Voltar para meus cursos
+</a>
+
+{% endblock %}
