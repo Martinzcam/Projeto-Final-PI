@@ -53,3 +53,17 @@ def inscrever(request, curso_id):
         )
 
     return redirect('detalhes', curso_id=curso.id)
+
+
+@login_required
+def meus_cursos(request):
+
+    inscricoes = Inscricao.objects.filter(
+        usuario=request.user
+    ).select_related('curso').order_by('-data_inscricao')
+
+    return render(
+        request,
+        'cursos/meus_cursos.html',
+        {'inscricoes': inscricoes}
+    )

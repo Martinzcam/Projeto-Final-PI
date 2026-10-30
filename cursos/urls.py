@@ -3,9 +3,18 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.home, name='cursos_home'),
 
-    path('catalogo/', views.catalogo, name='catalogo'),
+    path(
+        '',
+        views.home,
+        name='cursos_home'
+    ),
+
+    path(
+        'catalogo/',
+        views.catalogo,
+        name='catalogo'
+    ),
 
     path(
         'detalhes/<int:curso_id>/',
@@ -18,4 +27,11 @@ urlpatterns = [
         views.inscrever,
         name='inscrever'
     ),
+
+    path(
+        'meus-cursos/',
+        views.meus_cursos,
+        name='meus_cursos'
+    ),
+
 ]

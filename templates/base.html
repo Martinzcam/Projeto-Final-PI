@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <title>{% block title %}Estude Mais{% endblock %}</title>
@@ -15,14 +16,24 @@
         <h1>Estude Mais</h1>
 
         <nav>
+
             <a href="{% url 'accounts_home' %}">Início</a>
+
             <a href="{% url 'catalogo' %}">Cursos</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'meus_cursos' %}">Meus cursos</a>
+            {% endif %}
+
             <a href="{% url 'cadastro' %}">Cadastrar</a>
+
             <a href="{% url 'login' %}">Entrar</a>
+
         </nav>
     </header>
 
     <main>
+
         {% if messages %}
             {% for message in messages %}
                 <p>{{ message }}</p>
@@ -31,6 +42,7 @@
 
         {% block content %}
         {% endblock %}
+
     </main>
 
     <footer>
