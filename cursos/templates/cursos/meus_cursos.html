@@ -23,8 +23,8 @@
             {{ inscricao.data_inscricao|date:"d/m/Y H:i" }}
         </p>
 
-        <a href="{% url 'detalhes' inscricao.curso.id %}">
-            Acessar curso
+        <a href="{% url 'area_aprendizagem' inscricao.curso.id %}">
+            Entrar na área de aprendizagem
         </a>
 
     </div>

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ aula.titulo }} | Estude Mais{% endblock %}
+
+{% block content %}
+
+<h2>{{ aula.titulo }}</h2>
+
+<h3>{{ curso.titulo }}</h3>
+
+<hr>
+
+<div class="conteudo-aula">
+
+    {{ aula.conteudo|linebreaks }}
+
+</div>
+
+{% if aula.video_url %}
+
+    <hr>
+
+    <h3>Vídeo da aula</h3>
+
+    <a href="{{ aula.video_url }}" target="_blank" rel="noopener noreferrer">
+        Assistir vídeo
+    </a>
+
+{% endif %}
+
+<hr>
+
+<a href="{% url 'area_aprendizagem' curso.id %}">
+    Voltar para o conteúdo do curso
+</a>
+
+{% endblock %}
