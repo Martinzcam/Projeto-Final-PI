@@ -1,9 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Contas
+    Página Inicial
 {% endblock %}
 
 {% block content %}
-    <h2>Aplicativo Accounts funcionando!</h2>
+
+<h2>Bem-vindo à nossa plataforma de cursos!</h2>
+
+<p>
+    Aqui você pode encontrar cursos para aprender
+    novos conhecimentos e desenvolver suas habilidades.
+</p>
+
+<h3>Comece a aprender agora!</h3>
+
+<p>
+    Explore nosso catálogo e encontre o curso ideal para você.
+</p>
+
+<a href="{% url 'catalogo' %}">Ver cursos disponíveis</a>
+
 {% endblock %}
