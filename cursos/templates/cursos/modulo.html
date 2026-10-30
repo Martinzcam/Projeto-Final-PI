@@ -4,70 +4,104 @@
 
 {% block content %}
 
-<h2>{{ curso.titulo }}</h2>
+<div class="page-heading">
 
-<p>
-    <a href="{% url 'area_aprendizagem' curso.id %}">
-        Voltar para os módulos do curso
-    </a>
-</p>
-
-<hr>
-
-<h3>
-    Módulo {{ modulo.ordem }} - {{ modulo.titulo }}
-</h3>
-
-<p>{{ modulo.descricao }}</p>
-
-<hr>
-
-<h3>Aulas deste módulo</h3>
-
-{% for aula in aulas %}
-
-    <div class="aula">
-
-        <h4>
-            Aula {{ aula.ordem }} - {{ aula.titulo }}
-        </h4>
-
-        <a href="{% url 'detalhe_aula' aula.id %}">
-            Acessar aula
+    <p class="page-description">
+        <a href="{% url 'area_aprendizagem' curso.id %}">
+            {{ curso.titulo }}
         </a>
+        / {{ modulo.titulo }}
+    </p>
+
+    <h2>
+        Módulo {{ modulo.ordem }} -
+        {{ modulo.titulo }}
+    </h2>
+
+    <p class="page-description">
+        {{ modulo.descricao }}
+    </p>
+
+</div>
+
+
+<div class="content-panel">
+
+    <h3>Aulas deste módulo</h3>
+
+    <div class="lesson-list">
+
+        {% for aula in aulas %}
+
+            <div class="lesson-item">
+
+                <a href="{% url 'detalhe_aula' aula.id %}"
+                   class="lesson-link">
+
+                    <span>
+                        Aula {{ aula.ordem }} -
+                        {{ aula.titulo }}
+                    </span>
+
+                    <span>→</span>
+
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <div class="empty-state">
+
+                <p>
+                    Este módulo ainda não possui aulas cadastradas.
+                </p>
+
+            </div>
+
+        {% endfor %}
 
     </div>
 
-    <hr>
+</div>
 
-{% empty %}
-
-    <p>Este módulo ainda não possui aulas cadastradas.</p>
-
-{% endfor %}
 
 <h3>Navegação entre módulos</h3>
 
-{% if modulo_anterior %}
+<div class="page-actions">
 
-    <a href="{% url 'detalhe_modulo' modulo_anterior.id %}">
-        ← Módulo anterior
+    {% if modulo_anterior %}
+
+        <a href="{% url 'detalhe_modulo' modulo_anterior.id %}"
+           class="button button-secondary">
+
+            ← Módulo anterior
+
+        </a>
+
+    {% endif %}
+
+
+    {% if proximo_modulo %}
+
+        <a href="{% url 'detalhe_modulo' proximo_modulo.id %}"
+           class="button button-primary">
+
+            Próximo módulo →
+
+        </a>
+
+    {% endif %}
+
+</div>
+
+
+<div class="page-actions">
+
+    <a href="{% url 'area_aprendizagem' curso.id %}">
+        Voltar para os módulos do curso
     </a>
 
-{% endif %}
-
-{% if proximo_modulo %}
-
-    <a href="{% url 'detalhe_modulo' proximo_modulo.id %}">
-        Próximo módulo →
-    </a>
-
-{% endif %}
-
-<hr>
-
-<a href="{% url 'meus_cursos' %}">
-    Voltar para meus cursos
-</a>
+</div>
 
 {% endblock %}

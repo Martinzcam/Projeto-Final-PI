@@ -1,25 +1,60 @@
 {% extends 'base.html' %}
 
+{% block title %}Catálogo de cursos | Estude Mais{% endblock %}
+
 {% block content %}
 
-<h2>Catálogo de Cursos</h2>
+<div class="page-heading">
 
-<p>Confira os cursos disponíveis na nossa plataforma.</p>
+    <h2>Catálogo de cursos</h2>
 
-{% for curso in cursos %}
+    <p class="page-description">
+        Confira os cursos disponíveis e escolha o que deseja aprender.
+    </p>
 
-    <div class="curso">
-        <h3>{{ curso.titulo }}</h3>
+</div>
 
-        <p>{{ curso.descricao|truncatewords:20 }}</p>
 
-        <a href="{% url 'detalhes' curso.id %}">Ver detalhes</a>
-    </div>
+<div class="course-grid">
 
-{% empty %}
+    {% for curso in cursos %}
 
-    <p>Nenhum curso publicado no momento.</p>
+        <div class="course-card">
 
-{% endfor %}
+            <h3>{{ curso.titulo }}</h3>
+
+            <p>
+                {{ curso.descricao|truncatewords:25 }}
+            </p>
+
+            <div class="page-actions">
+
+                <a href="{% url 'detalhes' curso.id %}"
+                   class="button button-primary">
+
+                    Ver detalhes
+
+                </a>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="empty-state">
+
+            <h3>Nenhum curso disponível</h3>
+
+            <p>
+                Não existem cursos publicados no momento.
+                Volte em breve para conferir as novidades!
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+</div>
 
 {% endblock %}

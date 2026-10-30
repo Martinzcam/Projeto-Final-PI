@@ -1,65 +1,106 @@
 {% extends 'base.html' %}
 
-{% block title %}Área de aprendizagem | Estude Mais{% endblock %}
+{% block title %}Aprender | {{ curso.titulo }}{% endblock %}
 
 {% block content %}
 
-<h2>{{ curso.titulo }}</h2>
+<div class="page-heading">
 
-<p>{{ curso.descricao }}</p>
+    <h2>{{ curso.titulo }}</h2>
 
-<hr>
+    <p class="page-description">
+        {{ curso.descricao }}
+    </p>
 
-<h3>Módulos do curso</h3>
+</div>
 
-{% for modulo in modulos %}
 
-    <div class="modulo">
+<h3>Conteúdo do curso</h3>
 
-        <h3>
-            Módulo {{ modulo.ordem }} - {{ modulo.titulo }}
-        </h3>
+<div class="module-list">
 
-        <p>{{ modulo.descricao }}</p>
+    {% for modulo in modulos %}
 
-        <p>
-            <strong>Aulas deste módulo:</strong>
-        </p>
+        <div class="module-card">
 
-        {% for aula in modulo.aula_set.all %}
+            <div class="module-heading">
+
+                <h3>
+                    Módulo {{ modulo.ordem }} -
+                    {{ modulo.titulo }}
+                </h3>
+
+                <a href="{% url 'detalhe_modulo' modulo.id %}"
+                   class="button button-primary">
+
+                    Abrir módulo
+
+                </a>
+
+            </div>
 
             <p>
-                <a href="{% url 'detalhe_aula' aula.id %}">
-                    Aula {{ aula.ordem }} - {{ aula.titulo }}
-                </a>
+                {{ modulo.descricao }}
             </p>
 
-        {% empty %}
+            <div class="lesson-list">
 
-            <p>Este módulo ainda não possui aulas.</p>
+                {% for aula in modulo.aula_set.all %}
 
-        {% endfor %}
+                    <div class="lesson-item">
 
-        <p>
-            <a href="{% url 'detalhe_modulo' modulo.id %}">
-                Abrir módulo
-            </a>
-        </p>
+                        <a href="{% url 'detalhe_aula' aula.id %}"
+                           class="lesson-link">
 
-    </div>
+                            <span>
+                                Aula {{ aula.ordem }} -
+                                {{ aula.titulo }}
+                            </span>
 
-    <hr>
+                            <span>→</span>
 
-{% empty %}
+                        </a>
 
-    <p>Este curso ainda não possui módulos cadastrados.</p>
+                    </div>
 
-{% endfor %}
+                {% empty %}
 
-<p>
-    <a href="{% url 'meus_cursos' %}">
+                    <p>
+                        Este módulo ainda não possui aulas.
+                    </p>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="empty-state">
+
+            <h3>Nenhum módulo cadastrado</h3>
+
+            <p>
+                Este curso ainda não possui conteúdo disponível.
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+</div>
+
+
+<div class="page-actions">
+
+    <a href="{% url 'meus_cursos' %}"
+       class="button button-secondary">
+
         Voltar para meus cursos
+
     </a>
-</p>
+
+</div>
 
 {% endblock %}

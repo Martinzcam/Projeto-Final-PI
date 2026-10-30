@@ -1,24 +1,58 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    Página Inicial
-{% endblock %}
+{% block title %}Início | Estude Mais{% endblock %}
 
 {% block content %}
 
-<h2>Bem-vindo à nossa plataforma de cursos!</h2>
+<section class="hero">
 
-<p>
-    Aqui você pode encontrar cursos para aprender
-    novos conhecimentos e desenvolver suas habilidades.
-</p>
+    <h2>
+        Aprenda algo novo todos os dias.
+    </h2>
 
-<h3>Comece a aprender agora!</h3>
+    <p>
+        Explore cursos, desenvolva novas habilidades
+        e avance no seu aprendizado com a nossa plataforma.
+    </p>
 
-<p>
-    Explore nosso catálogo e encontre o curso ideal para você.
-</p>
+    <a href="{% url 'catalogo' %}" class="button button-primary">
+        Explorar cursos
+    </a>
 
-<a href="{% url 'catalogo' %}">Ver cursos disponíveis</a>
+</section>
+
+
+<section>
+
+    <h2>Comece a aprender agora!</h2>
+
+    <p class="page-description">
+        Encontre conteúdos organizados em módulos e aulas
+        para estudar no seu próprio ritmo.
+    </p>
+
+    <div class="page-actions">
+
+        <a href="{% url 'catalogo' %}" class="button button-primary">
+            Ver cursos disponíveis
+        </a>
+
+        {% if not user.is_authenticated %}
+
+            <a href="{% url 'cadastro' %}" class="button button-secondary">
+                Criar uma conta
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'meus_cursos' %}" class="button button-secondary">
+                Meus cursos
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
 
 {% endblock %}
