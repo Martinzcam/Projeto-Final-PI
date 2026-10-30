@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Entrar | Estude Mais{% endblock %}
+{% block title %}Login | Estude Mais{% endblock %}
 
 {% block content %}
 
@@ -14,43 +14,44 @@
 
 </div>
 
-
 <form method="POST" class="auth-form">
 
     {% csrf_token %}
 
-    <label for="username">
-        Nome de usuário
-    </label>
+    {{ form.non_field_errors }}
 
-    <input
-        type="text"
-        id="username"
-        name="username"
-        placeholder="Digite seu nome de usuário"
-        autocomplete="username"
+    {% if next %}
+        <input type="hidden" name="next" value="{{ next }}">
+    {% endif %}
+
+    {% for field in form %}
+
+        <div class="form-field">
+
+            {{ field.label_tag }}
+
+            {{ field }}
+
+            {% for error in field.errors %}
+
+                <p class="message error">
+                    {{ error }}
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    {% endfor %}
+
+    <button
+        type="submit"
+        class="button button-primary"
     >
-
-
-    <label for="password">
-        Senha
-    </label>
-
-    <input
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Digite sua senha"
-        autocomplete="current-password"
-    >
-
-
-    <button type="submit" class="button button-primary">
         Entrar na plataforma
     </button>
 
 </form>
-
 
 <p style="text-align: center;">
 
