@@ -4,52 +4,94 @@
 
 {% block content %}
 
-<h2>{{ curso.titulo }}</h2>
+<div class="course-details">
 
-<p>{{ curso.descricao }}</p>
+    <div class="page-heading">
 
-<hr>
+        <h2>{{ curso.titulo }}</h2>
 
-<h3>Acesso ao curso</h3>
+        <p class="page-description">
+            Conheça os detalhes deste curso.
+        </p>
 
-{% if user.is_authenticated %}
+    </div>
 
-    {% if inscrito %}
 
-        <p>Você já está inscrito neste curso!</p>
+    <div class="content-panel">
 
-        <a href="{% url 'area_aprendizagem' curso.id %}">
-            Acessar área de aprendizagem
-        </a>
+        <h3>Sobre o curso</h3>
 
-    {% else %}
+        <p>
+            {{ curso.descricao }}
+        </p>
 
-        <form method="POST" action="{% url 'inscrever' curso.id %}">
+    </div>
 
-            {% csrf_token %}
 
-            <button type="submit">
-                Inscrever-se
-            </button>
+    <div class="content-panel">
 
-        </form>
+        <h3>Acesso ao curso</h3>
 
-    {% endif %}
+        {% if user.is_authenticated %}
 
-{% else %}
+            {% if inscrito %}
 
-    <p>Você precisa estar autenticado para se inscrever.</p>
+                <p>
+                    Você já está inscrito neste curso!
+                </p>
 
-    <a href="{% url 'login' %}">
-        Fazer login
+                <a href="{% url 'area_aprendizagem' curso.id %}"
+                   class="button button-primary">
+
+                    Acessar área de aprendizagem
+
+                </a>
+
+            {% else %}
+
+                <p>
+                    Inscreva-se para começar a aprender.
+                </p>
+
+                <form method="POST"
+                      action="{% url 'inscrever' curso.id %}"
+                      class="inline-form">
+
+                    {% csrf_token %}
+
+                    <button type="submit"
+                            class="button button-primary">
+
+                        Inscrever-se
+
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+        {% else %}
+
+            <p>
+                Você precisa estar autenticado para se inscrever.
+            </p>
+
+            <a href="{% url 'login' %}"
+               class="button button-primary">
+
+                Fazer login
+
+            </a>
+
+        {% endif %}
+
+    </div>
+
+
+    <a href="{% url 'catalogo' %}" class="button button-secondary">
+        Voltar ao catálogo
     </a>
 
-{% endif %}
-
-<hr>
-
-<a href="{% url 'catalogo' %}">
-    Voltar ao catálogo
-</a>
+</div>
 
 {% endblock %}

@@ -4,84 +4,102 @@
 
 {% block content %}
 
-<h2>{{ curso.titulo }}</h2>
+<div class="page-heading">
 
-<p>
-    <a href="{% url 'area_aprendizagem' curso.id %}">
-        Voltar para os módulos
-    </a>
-</p>
+    <p class="page-description">
 
-<p>
-    <a href="{% url 'detalhe_modulo' modulo.id %}">
-        Voltar para {{ modulo.titulo }}
-    </a>
-</p>
+        <a href="{% url 'area_aprendizagem' curso.id %}">
+            {{ curso.titulo }}
+        </a>
 
-<hr>
+        /
 
-<h3>
-    {{ aula.titulo }}
-</h3>
+        <a href="{% url 'detalhe_modulo' modulo.id %}">
+            {{ modulo.titulo }}
+        </a>
 
-<p>
-    <strong>Módulo:</strong> {{ modulo.titulo }}
-</p>
+    </p>
 
-<hr>
+    <h2>{{ aula.titulo }}</h2>
 
-<h3>Conteúdo da aula</h3>
+    <p class="page-description">
+        Módulo: {{ modulo.titulo }}
+    </p>
 
-<div class="conteudo-aula">
+</div>
+
+
+<div class="lesson-content">
+
+    <h3>Conteúdo da aula</h3>
 
     {{ aula.conteudo|linebreaks }}
 
 </div>
 
+
 {% if aula.video_url %}
 
-    <hr>
+    <div class="video-section">
 
-    <h3>Vídeo da aula</h3>
+        <h3>Vídeo da aula</h3>
 
-    <p>
+        <p>
+            Assista ao vídeo complementar desta aula.
+        </p>
+
         <a href="{{ aula.video_url }}"
            target="_blank"
-           rel="noopener noreferrer">
+           rel="noopener noreferrer"
+           class="button button-primary">
 
-            Assistir vídeo da aula
+            Assistir vídeo
 
         </a>
-    </p>
+
+    </div>
 
 {% endif %}
 
-<hr>
 
 <h3>Navegação entre aulas</h3>
 
-{% if aula_anterior %}
+<div class="lesson-navigation">
 
-    <a href="{% url 'detalhe_aula' aula_anterior.id %}">
-        ← {{ aula_anterior.titulo }}
-    </a>
+    {% if aula_anterior %}
 
-{% endif %}
+        <a href="{% url 'detalhe_aula' aula_anterior.id %}"
+           class="button button-secondary">
 
-{% if proxima_aula %}
+            ← Aula anterior
 
-    <a href="{% url 'detalhe_aula' proxima_aula.id %}">
-        {{ proxima_aula.titulo }} →
-    </a>
+        </a>
 
-{% endif %}
+    {% else %}
+
+        <span></span>
+
+    {% endif %}
+
+
+    {% if proxima_aula %}
+
+        <a href="{% url 'detalhe_aula' proxima_aula.id %}"
+           class="button button-primary">
+
+            Próxima aula →
+
+        </a>
+
+    {% endif %}
+
+</div>
+
 
 <hr>
 
-<p>
-    <a href="{% url 'meus_cursos' %}">
-        Voltar para meus cursos
-    </a>
-</p>
+<a href="{% url 'area_aprendizagem' curso.id %}">
+    Voltar para os módulos
+</a>
 
 {% endblock %}

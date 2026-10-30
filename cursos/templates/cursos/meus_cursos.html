@@ -4,41 +4,66 @@
 
 {% block content %}
 
-<h2>Meus cursos</h2>
+<div class="page-heading">
 
-<p>Aqui estão os cursos nos quais você está inscrito.</p>
+    <h2>Meus cursos</h2>
 
-<hr>
+    <p class="page-description">
+        Aqui estão os cursos nos quais você está inscrito.
+    </p>
 
-{% for inscricao in inscricoes %}
+</div>
 
-    <div class="curso">
 
-        <h3>{{ inscricao.curso.titulo }}</h3>
+<div class="course-grid">
 
-        <p>{{ inscricao.curso.descricao }}</p>
+    {% for inscricao in inscricoes %}
 
-        <p>
-            <strong>Data da inscrição:</strong>
-            {{ inscricao.data_inscricao|date:"d/m/Y H:i" }}
-        </p>
+        <div class="course-card">
 
-        <a href="{% url 'area_aprendizagem' inscricao.curso.id %}">
-            Entrar na área de aprendizagem
-        </a>
+            <h3>{{ inscricao.curso.titulo }}</h3>
 
-    </div>
+            <p>
+                {{ inscricao.curso.descricao }}
+            </p>
 
-    <hr>
+            <span class="course-meta">
 
-{% empty %}
+                Inscrito em:
+                {{ inscricao.data_inscricao|date:"d/m/Y H:i" }}
 
-    <p>Você ainda não está inscrito em nenhum curso.</p>
+            </span>
 
-    <a href="{% url 'catalogo' %}">
-        Explorar cursos disponíveis
-    </a>
+            <a href="{% url 'area_aprendizagem' inscricao.curso.id %}"
+               class="button button-primary">
 
-{% endfor %}
+                Entrar na área de aprendizagem
+
+            </a>
+
+        </div>
+
+    {% empty %}
+
+        <div class="empty-state">
+
+            <h3>Você ainda não possui cursos.</h3>
+
+            <p>
+                Explore o catálogo e faça sua primeira inscrição.
+            </p>
+
+            <a href="{% url 'catalogo' %}"
+               class="button button-primary">
+
+                Explorar cursos
+
+            </a>
+
+        </div>
+
+    {% endfor %}
+
+</div>
 
 {% endblock %}

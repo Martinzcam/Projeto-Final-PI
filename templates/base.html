@@ -2,52 +2,110 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta name="description"
+          content="Estude Mais - Plataforma de cursos online.">
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}?v=2">
 
     <title>{% block title %}Estude Mais{% endblock %}</title>
+
 </head>
+
 <body>
 
-    <header>
-        <h1>Estude Mais</h1>
+    <header class="site-header">
 
-        <nav>
+        <div class="header-content">
 
-            <a href="{% url 'accounts_home' %}">Início</a>
+            <a href="{% url 'accounts_home' %}" class="brand">
+                Estude Mais
+            </a>
 
-            <a href="{% url 'catalogo' %}">Cursos</a>
+            <nav class="main-nav">
 
-            {% if user.is_authenticated %}
-                <a href="{% url 'meus_cursos' %}">Meus cursos</a>
-            {% endif %}
+                <a href="{% url 'accounts_home' %}" class="nav-link">
+                    Início
+                </a>
 
-            <a href="{% url 'cadastro' %}">Cadastrar</a>
+                <a href="{% url 'catalogo' %}" class="nav-link">
+                    Cursos
+                </a>
 
-            <a href="{% url 'login' %}">Entrar</a>
+                {% if user.is_authenticated %}
 
-        </nav>
+                    <a href="{% url 'meus_cursos' %}" class="nav-link">
+                        Meus cursos
+                    </a>
+
+                    <span class="nav-user">
+                        Olá, {{ user.username }}
+                    </span>
+
+                {% else %}
+
+                    <a href="{% url 'login' %}" class="nav-link">
+                        Entrar
+                    </a>
+
+                    <a href="{% url 'cadastro' %}" class="nav-link">
+                        Cadastrar
+                    </a>
+
+                {% endif %}
+
+            </nav>
+
+        </div>
+
     </header>
 
-    <main>
+
+    <main class="page-content">
 
         {% if messages %}
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
+
+            <div class="messages" role="status" aria-live="polite">
+
+                {% for message in messages %}
+
+                    <div class="message {{ message.tags|default:'info' }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
         {% endif %}
 
+
         {% block content %}
+
         {% endblock %}
 
     </main>
 
-    <footer>
-        <p>Projeto Integrador</p>
+
+    <footer class="site-footer">
+
+        <p>
+            Estude Mais - Plataforma de aprendizagem online.
+        </p>
+
+        <p>
+            Projeto Integrador
+        </p>
+
     </footer>
 
 </body>
+
 </html>

@@ -1,25 +1,65 @@
 {% extends 'base.html' %}
 
+{% block title %}Entrar | Estude Mais{% endblock %}
+
 {% block content %}
 
-<h2>Login</h2>
+<div class="page-heading">
 
-<p>Entre na sua conta para acessar nossa plataforma.</p>
+    <h2>Bem-vindo de volta!</h2>
 
-<form method="POST">
+    <p class="page-description">
+        Entre na sua conta para continuar seus estudos.
+    </p>
+
+</div>
+
+
+<form method="POST" class="auth-form">
+
     {% csrf_token %}
 
-    <label>Nome de usuário:</label>
-    <input type="text" name="username">
+    <label for="username">
+        Nome de usuário
+    </label>
 
-    <label>Senha:</label>
-    <input type="password" name="password">
+    <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Digite seu nome de usuário"
+        autocomplete="username"
+    >
 
-    <button type="submit">Entrar</button>
+
+    <label for="password">
+        Senha
+    </label>
+
+    <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Digite sua senha"
+        autocomplete="current-password"
+    >
+
+
+    <button type="submit" class="button button-primary">
+        Entrar na plataforma
+    </button>
+
 </form>
 
-<p>Ainda não possui uma conta?
-    <a href="{% url 'cadastro' %}">Cadastre-se</a>
+
+<p style="text-align: center;">
+
+    Ainda não possui uma conta?
+
+    <a href="{% url 'cadastro' %}">
+        Cadastre-se gratuitamente
+    </a>
+
 </p>
 
 {% endblock %}

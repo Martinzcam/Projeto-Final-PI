@@ -1,9 +1,21 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    Cursos
-{% endblock %}
+{% block title %}Cursos | Estude Mais{% endblock %}
 
 {% block content %}
-    <h2>Aplicativo Cursos funcionando!</h2>
+
+<div class="page-heading">
+
+    <h2>Área de cursos</h2>
+
+    <p class="page-description">
+        Explore nossos cursos e encontre novos conhecimentos.
+    </p>
+
+</div>
+
+<a href="{% url 'catalogo' %}" class="button button-primary">
+    Ver catálogo de cursos
+</a>
+
 {% endblock %}
