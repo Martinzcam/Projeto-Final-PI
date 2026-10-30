@@ -15,12 +15,20 @@
         <h1>Nosso Projeto</h1>
 
         <nav>
-            <a href="{% url 'accounts_home' %}">Contas</a>
+            <a href="{% url 'accounts_home' %}">Início</a>
             <a href="{% url 'cursos_home' %}">Cursos</a>
+            <a href="{% url 'cadastro' %}">Cadastrar</a>
+            <a href="{% url 'login' %}">Entrar</a>
         </nav>
     </header>
 
     <main>
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
         {% block content %}
         {% endblock %}
     </main>
