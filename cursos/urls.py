@@ -41,6 +41,12 @@ urlpatterns = [
     ),
 
     path(
+        'modulo/<int:modulo_id>/',
+        views.detalhe_modulo,
+        name='detalhe_modulo'
+    ),
+
+    path(
         'aula/<int:aula_id>/',
         views.detalhe_aula,
         name='detalhe_aula'

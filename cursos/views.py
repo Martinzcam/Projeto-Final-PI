@@ -14,7 +14,11 @@ def home(request):
 def catalogo(request):
     cursos = Curso.objects.filter(publicado=True)
 
-    return render(request, 'cursos/catalogo.html', {'cursos': cursos})
+    return render(
+        request,
+        'cursos/catalogo.html',
+        {'cursos': cursos}
+    )
 
 
 def _usuario_inscrito_no_curso(usuario, curso):
@@ -52,7 +56,6 @@ def detalhes(request, curso_id):
 @login_required
 @require_POST
 def inscrever(request, curso_id):
-
     curso = get_object_or_404(
         Curso,
         id=curso_id,
@@ -80,7 +83,6 @@ def inscrever(request, curso_id):
 
 @login_required
 def meus_cursos(request):
-
     inscricoes = Inscricao.objects.filter(
         usuario=request.user
     ).select_related('curso').order_by('-data_inscricao')
@@ -94,7 +96,6 @@ def meus_cursos(request):
 
 @login_required
 def area_aprendizagem(request, curso_id):
-
     curso = get_object_or_404(
         Curso,
         id=curso_id,
@@ -111,10 +112,10 @@ def area_aprendizagem(request, curso_id):
 
     modulos = Modulo.objects.filter(
         curso=curso
-    ).order_by('ordem').prefetch_related(
+    ).order_by('ordem', 'id').prefetch_related(
         Prefetch(
             'aula_set',
-            queryset=Aula.objects.order_by('ordem')
+            queryset=Aula.objects.order_by('ordem', 'id')
         )
     )
 
@@ -129,8 +130,63 @@ def area_aprendizagem(request, curso_id):
 
 
 @login_required
-def detalhe_aula(request, aula_id):
+def detalhe_modulo(request, modulo_id):
+    modulo = get_object_or_404(
+        Modulo.objects.select_related('curso'),
+        id=modulo_id,
+        curso__publicado=True
+    )
 
+    curso = modulo.curso
+
+    if not _usuario_inscrito_no_curso(request.user, curso):
+        messages.error(
+            request,
+            'Você precisa estar inscrito neste curso para acessar este módulo.'
+        )
+
+        return redirect('detalhes', curso_id=curso.id)
+
+    aulas = Aula.objects.filter(
+        modulo=modulo
+    ).order_by('ordem', 'id')
+
+    modulos = list(
+        Modulo.objects.filter(
+            curso=curso
+        ).order_by('ordem', 'id')
+    )
+
+    indice = next(
+        i for i, item in enumerate(modulos)
+        if item.id == modulo.id
+    )
+
+    modulo_anterior = (
+        modulos[indice - 1] if indice > 0 else None
+    )
+
+    proximo_modulo = (
+        modulos[indice + 1]
+        if indice < len(modulos) - 1
+        else None
+    )
+
+    return render(
+        request,
+        'cursos/modulo.html',
+        {
+            'curso': curso,
+            'modulo': modulo,
+            'aulas': aulas,
+            'modulo_anterior': modulo_anterior,
+            'proximo_modulo': proximo_modulo
+        }
+    )
+
+
+@login_required
+def detalhe_aula(request, aula_id):
     aula = get_object_or_404(
         Aula.objects.select_related('modulo__curso'),
         id=aula_id,
@@ -147,11 +203,45 @@ def detalhe_aula(request, aula_id):
 
         return redirect('detalhes', curso_id=curso.id)
 
+    # Busca todas as aulas do curso na ordem dos módulos e das aulas.
+    aulas_curso = list(
+        Aula.objects.filter(
+            modulo__curso=curso
+        ).select_related(
+            'modulo'
+        ).order_by(
+            'modulo__ordem',
+            'modulo__id',
+            'ordem',
+            'id'
+        )
+    )
+
+    # Descobre a posição da aula atual.
+    indice = next(
+        i for i, item in enumerate(aulas_curso)
+        if item.id == aula.id
+    )
+
+    # Identifica a aula anterior e a próxima.
+    aula_anterior = (
+        aulas_curso[indice - 1] if indice > 0 else None
+    )
+
+    proxima_aula = (
+        aulas_curso[indice + 1]
+        if indice < len(aulas_curso) - 1
+        else None
+    )
+
     return render(
         request,
         'cursos/aula.html',
         {
             'aula': aula,
-            'curso': curso
+            'curso': curso,
+            'modulo': aula.modulo,
+            'aula_anterior': aula_anterior,
+            'proxima_aula': proxima_aula
         }
     )
