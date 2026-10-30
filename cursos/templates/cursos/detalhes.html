@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>{{ curso.titulo }}</h2>
+
+<p>{{ curso.descricao }}</p>
+
+<p>
+    <a href="{% url 'catalogo' %}">Voltar ao catálogo</a>
+</p>
+
+{% endblock %}

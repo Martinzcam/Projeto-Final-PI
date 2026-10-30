@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Catálogo de Cursos</h2>
+
+<p>Confira os cursos disponíveis na nossa plataforma.</p>
+
+{% for curso in cursos %}
+
+    <div class="curso">
+        <h3>{{ curso.titulo }}</h3>
+
+        <p>{{ curso.descricao|truncatewords:20 }}</p>
+
+        <a href="{% url 'detalhes' curso.id %}">Ver detalhes</a>
+    </div>
+
+{% empty %}
+
+    <p>Nenhum curso publicado no momento.</p>
+
+{% endfor %}
+
+{% endblock %}
