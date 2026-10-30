@@ -34,4 +34,16 @@ urlpatterns = [
         name='meus_cursos'
     ),
 
+    path(
+        'aprender/<int:curso_id>/',
+        views.area_aprendizagem,
+        name='area_aprendizagem'
+    ),
+
+    path(
+        'aula/<int:aula_id>/',
+        views.detalhe_aula,
+        name='detalhe_aula'
+    ),
+
 ]

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Área de aprendizagem | Estude Mais{% endblock %}
+
+{% block content %}
+
+<h2>{{ curso.titulo }}</h2>
+
+<p>{{ curso.descricao }}</p>
+
+<hr>
+
+<h3>Conteúdo do curso</h3>
+
+{% for modulo in modulos %}
+
+    <div class="modulo">
+
+        <h3>{{ modulo.titulo }}</h3>
+
+        <p>{{ modulo.descricao }}</p>
+
+        <h4>Aulas deste módulo:</h4>
+
+        {% for aula in modulo.aula_set.all %}
+
+            <p>
+                <a href="{% url 'detalhe_aula' aula.id %}">
+                    {{ aula.titulo }}
+                </a>
+            </p>
+
+        {% empty %}
+
+            <p>Este módulo ainda não possui aulas.</p>
+
+        {% endfor %}
+
+    </div>
+
+    <hr>
+
+{% empty %}
+
+    <p>Este curso ainda não possui módulos cadastrados.</p>
+
+{% endfor %}
+
+<p>
+    <a href="{% url 'meus_cursos' %}">
+        Voltar para meus cursos
+    </a>
+</p>
+
+{% endblock %}

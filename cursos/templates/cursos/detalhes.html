@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block title %}{{ curso.titulo }} | Estude Mais{% endblock %}
+
 {% block content %}
 
 <h2>{{ curso.titulo }}</h2>
@@ -12,28 +14,42 @@
 
 {% if user.is_authenticated %}
 
-    <form method="POST" action="{% url 'inscrever' curso.id %}">
-        {% csrf_token %}
+    {% if inscrito %}
 
-        <button type="submit">
-            Inscrever-se
-        </button>
-    </form>
+        <p>Você já está inscrito neste curso!</p>
+
+        <a href="{% url 'area_aprendizagem' curso.id %}">
+            Acessar área de aprendizagem
+        </a>
+
+    {% else %}
+
+        <form method="POST" action="{% url 'inscrever' curso.id %}">
+
+            {% csrf_token %}
+
+            <button type="submit">
+                Inscrever-se
+            </button>
+
+        </form>
+
+    {% endif %}
 
 {% else %}
 
-    <p>
-        Você precisa estar autenticado para se inscrever.
-    </p>
+    <p>Você precisa estar autenticado para se inscrever.</p>
 
-    <a href="{% url 'login' %}">Fazer login</a>
+    <a href="{% url 'login' %}">
+        Fazer login
+    </a>
 
 {% endif %}
 
 <hr>
 
-<p>
-    <a href="{% url 'catalogo' %}">Voltar ao catálogo</a>
-</p>
+<a href="{% url 'catalogo' %}">
+    Voltar ao catálogo
+</a>
 
 {% endblock %}
