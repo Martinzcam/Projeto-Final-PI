@@ -3,9 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.db.models import Prefetch
-from django.core.exceptions import PermissionDenied
 from .forms import CursoForm, ModuloForm, AulaForm
-
+from accounts.decorators import admin_required
 from .models import Curso, Modulo, Aula, Inscricao
 
 
@@ -248,11 +247,8 @@ def detalhe_aula(request, aula_id):
         }
     )
 
-@login_required
+@admin_required
 def gerenciar_cursos(request):
-
-    if not request.user.is_staff:
-        raise PermissionDenied
 
     cursos = Curso.objects.all()
 
@@ -262,11 +258,8 @@ def gerenciar_cursos(request):
         {'cursos': cursos}
     )
 
-@login_required
+@admin_required
 def criar_curso(request):
-
-    if not request.user.is_staff:
-        raise PermissionDenied
 
     if request.method == 'POST':
 
@@ -284,12 +277,9 @@ def criar_curso(request):
         'cursos/form_curso.html',
         {'form': form, 'titulo': 'Cadastrar curso'}
     )
-
-@login_required
+    
+@admin_required
 def editar_curso(request, curso_id):
-
-    if not request.user.is_staff:
-        raise PermissionDenied
 
     curso = get_object_or_404(Curso, id=curso_id)
 
@@ -310,11 +300,8 @@ def editar_curso(request, curso_id):
         {'form': form, 'titulo': 'Editar curso'}
     )
 
-@login_required
+@admin_required
 def excluir_curso(request, curso_id):
-
-    if not request.user.is_staff:
-        raise PermissionDenied
 
     curso = get_object_or_404(Curso, id=curso_id)
 
@@ -328,14 +315,10 @@ def excluir_curso(request, curso_id):
         {'curso': curso}
     )
 
-
 #Funções para as funcionalidades dos Módulos#
 
-@login_required
+@admin_required
 def gerenciar_modulos(request):
-
-    if not request.user.is_staff:
-        raise PermissionDenied
 
     modulos = Modulo.objects.all()
 
@@ -345,11 +328,8 @@ def gerenciar_modulos(request):
         {'modulos': modulos}
     )
 
-@login_required
+@admin_required
 def criar_modulo(request):
-
-    if not request.user.is_staff:
-        raise PermissionDenied
 
     if request.method == 'POST':
 
@@ -372,11 +352,8 @@ def criar_modulo(request):
         }
     )
 
-@login_required
+@admin_required
 def editar_modulo(request, modulo_id):
-
-    if not request.user.is_staff:
-        raise PermissionDenied
 
     modulo = get_object_or_404(Modulo, id=modulo_id)
 
@@ -401,11 +378,8 @@ def editar_modulo(request, modulo_id):
         }
     )
 
-@login_required
+@admin_required
 def excluir_modulo(request, modulo_id):
-
-    if not request.user.is_staff:
-        raise PermissionDenied
 
     modulo = get_object_or_404(Modulo, id=modulo_id)
 
@@ -424,11 +398,11 @@ def excluir_modulo(request, modulo_id):
         }
     )
 
-@login_required
-def gerenciar_aulas(request):
 
-    if not request.user.is_staff:
-        raise PermissionDenied
+#Funções para as funcionalidades das Aulas#
+
+@admin_required
+def gerenciar_aulas(request):
 
     aulas = Aula.objects.all()
 
@@ -438,13 +412,8 @@ def gerenciar_aulas(request):
         {'aulas': aulas}
     )
 
-#Funções para as funcionalidades das Aulas#
-
-@login_required
+@admin_required
 def criar_aula(request):
-
-    if not request.user.is_staff:
-        raise PermissionDenied
 
     if request.method == 'POST':
 
@@ -467,11 +436,8 @@ def criar_aula(request):
         }
     )
 
-@login_required
+@admin_required
 def editar_aula(request, aula_id):
-
-    if not request.user.is_staff:
-        raise PermissionDenied
 
     aula = get_object_or_404(Aula, id=aula_id)
 
@@ -496,11 +462,8 @@ def editar_aula(request, aula_id):
         }
     )
 
-@login_required
+@admin_required
 def excluir_aula(request, aula_id):
-
-    if not request.user.is_staff:
-        raise PermissionDenied
 
     aula = get_object_or_404(Aula, id=aula_id)
 
