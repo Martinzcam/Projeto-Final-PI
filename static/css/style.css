@@ -901,3 +901,252 @@ button:disabled {
 .main-nav .inline-form button {
     white-space: nowrap;
 }
+
+/* ========================================
+   IDENTIDADE VISUAL ROXA - ISSUE #35
+   Camada de atualização visual sobre os estilos existentes
+======================================== */
+
+:root {
+    --primary-color: #6C3CE9;
+    --primary-hover: #5728cf;
+    --secondary-color: #17152B;
+    --background-color: #F5F3FF;
+    --surface-color: #ffffff;
+    --text-color: #28243b;
+    --secondary-text: #716b86;
+    --border-color: #e8e2f5;
+    --success-color: #18794e;
+    --success-background: #e4f7ed;
+    --error-color: #b4233c;
+    --error-background: #fff0f1;
+    --warning-color: #946200;
+    --warning-background: #fff7df;
+    --info-color: #5932b5;
+    --info-background: #f0eaff;
+    --border-radius: 16px;
+    --shadow: 0 8px 26px rgba(42, 24, 91, 0.07);
+}
+
+body {
+    background:
+        radial-gradient(ellipse at 12% 0%, rgba(167, 139, 250, 0.15), transparent 34%),
+        var(--background-color);
+    color: var(--text-color);
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+a { color: var(--primary-color); }
+a:hover { color: var(--primary-hover); }
+:focus-visible { outline-color: rgba(108, 60, 233, 0.45); }
+
+h1, h2, h3, h4 { color: var(--secondary-color); letter-spacing: -0.025em; }
+
+/* Cabeçalho */
+.site-header {
+    background: linear-gradient(110deg, #17152B 0%, #30205f 58%, #6C3CE9 125%);
+    padding: 16px 5%;
+    box-shadow: 0 8px 28px rgba(32, 20, 72, 0.18);
+}
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 23px;
+    letter-spacing: -0.04em;
+}
+.brand::before {
+    content: "✦";
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+    color: #fff;
+    background: linear-gradient(145deg, #A78BFA, #6C3CE9);
+    box-shadow: 0 4px 12px rgba(108, 60, 233, .35);
+}
+.brand:hover { color: #fff; }
+.nav-link {
+    border-radius: 10px;
+    padding: 9px 13px;
+    transition: background .2s ease, color .2s ease;
+}
+.nav-link:hover { background: rgba(255,255,255,.14); color: #fff; }
+.nav-user { color: #e7ddff; }
+.main-nav .button-secondary {
+    color: #fff;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.24);
+}
+.main-nav .button-secondary:hover { background: rgba(255,255,255,.2); }
+
+/* Área principal */
+.page-content {
+    max-width: 1240px;
+    margin: 32px auto;
+    padding: 38px;
+    border: 1px solid rgba(226, 217, 247, .9);
+    border-radius: 22px;
+    box-shadow: 0 14px 45px rgba(48, 30, 92, .07);
+}
+.page-heading { margin-bottom: 30px; }
+.page-heading h1, .page-heading h2 { font-weight: 750; }
+.page-description { color: var(--secondary-text); }
+
+/* Botões */
+.button {
+    min-height: 42px;
+    padding: 11px 19px;
+    border-radius: 11px;
+    font-weight: 650;
+    letter-spacing: .005em;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.button-primary {
+    color: #fff;
+    background: linear-gradient(110deg, #6C3CE9, #8759f1);
+    box-shadow: 0 5px 14px rgba(108, 60, 233, .2);
+}
+.button-primary:hover {
+    color: #fff;
+    background: linear-gradient(110deg, #5728cf, #7544e5);
+    box-shadow: 0 8px 18px rgba(108, 60, 233, .27);
+    transform: translateY(-2px);
+}
+.button-secondary {
+    color: #4d3a7d;
+    background: #f0eaff;
+    border: 1px solid #e2d7ff;
+}
+.button-secondary:hover { color: #382269; background: #e7dcff; }
+.button-danger { border-radius: 11px; }
+
+/* Cartões, módulos e aulas */
+.course-grid { gap: 24px; }
+.course-card, .curso {
+    border: 1px solid #ebe5f7;
+    border-radius: 17px;
+    padding: 25px;
+    box-shadow: 0 5px 18px rgba(42, 24, 91, .045);
+}
+.course-card:hover, .curso:hover {
+    border-color: #d2c2ff;
+    box-shadow: 0 13px 28px rgba(75, 47, 143, .11);
+    transform: translateY(-4px);
+}
+.course-card h3, .curso h3 { color: #30234f; }
+.course-meta { color: #817795; }
+.content-panel, .lesson-content {
+    background: linear-gradient(145deg, #fff, #faf8ff);
+    border: 1px solid #ebe5f7;
+    border-radius: 16px;
+}
+.module-card, .modulo {
+    border: 1px solid #e9e1f8;
+    border-left: 4px solid var(--primary-color);
+    border-radius: 15px;
+    box-shadow: 0 5px 18px rgba(42, 24, 91, .045);
+}
+.lesson-item, .aula {
+    background: #fbfaff;
+    border: 1px solid #eee9f8;
+    border-radius: 11px;
+}
+.lesson-item:hover, .aula:hover {
+    background: #f4efff;
+    border-color: #d7c8ff;
+}
+
+/* Formulários */
+.auth-form {
+    border: 1px solid #e9e1f8;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(42, 24, 91, .08);
+}
+.auth-form input, .auth-form textarea, .auth-form select {
+    border-color: #ded6ed;
+    border-radius: 10px;
+    min-height: 45px;
+}
+.auth-form input:focus, .auth-form textarea:focus, .auth-form select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(108, 60, 233, .13);
+}
+
+/* Mensagens e estados */
+.message { border-radius: 11px; }
+.empty-state {
+    background: linear-gradient(145deg, #fff, #f8f5ff);
+    border: 1px dashed #cbbcf0;
+    border-radius: 16px;
+}
+.video-section {
+    background: #f3eeff;
+    border: 1px solid #ded2ff;
+    border-radius: 16px;
+}
+
+/* Página inicial */
+.hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: linear-gradient(115deg, #17152B 0%, #4d25a8 56%, #8b42e8 100%);
+    border-radius: 22px;
+    padding: 66px 48px;
+    box-shadow: 0 15px 35px rgba(73, 39, 145, .2);
+}
+.hero::after {
+    content: "✦";
+    position: absolute;
+    z-index: -1;
+    right: 8%;
+    top: -42px;
+    color: rgba(255,255,255,.09);
+    font-size: clamp(180px, 26vw, 340px);
+    line-height: 1;
+}
+.hero h2 {
+    max-width: 720px;
+    color: #fff;
+    font-size: clamp(30px, 4vw, 43px);
+    font-weight: 800;
+    letter-spacing: -.04em;
+}
+.hero p { color: #eee7ff; font-size: 16px; line-height: 1.8; }
+.hero .button-primary {
+    color: #4b2a9a;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,.12);
+}
+.hero .button-primary:hover { color: #3c1f83; background: #f2edff; }
+
+/* Rodapé */
+.site-footer {
+    background: #17152B;
+    color: #cfc8e2;
+    padding: 28px 15px;
+    margin-top: 40px;
+}
+.site-footer p + p { color: #9d91bd; margin-top: 5px; }
+
+/* Ajustes de telas menores */
+@media (max-width: 850px) {
+    .page-content { padding: 27px; }
+    .hero { padding: 48px 32px; }
+}
+@media (max-width: 600px) {
+    .page-content {
+        width: calc(100% - 24px);
+        margin: 16px auto;
+        padding: 21px 16px;
+        border-radius: 15px;
+    }
+    .site-header { padding: 16px 14px; }
+    .main-nav { gap: 4px; }
+    .nav-link { padding: 8px 9px; }
+    .hero { padding: 38px 22px; border-radius: 16px; }
+    .hero h2 { font-size: 29px; }
+    .course-card, .curso, .module-card, .modulo { padding: 19px; }
+}
