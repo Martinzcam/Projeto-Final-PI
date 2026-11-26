@@ -3,56 +3,44 @@
 {% block title %}Início | Estude Mais{% endblock %}
 
 {% block content %}
-
 <section class="hero">
-
-    <h2>
-        Aprenda algo novo todos os dias.
-    </h2>
-
+    <h2>Seu próximo passo começa com conhecimento.</h2>
     <p>
-        Explore cursos, desenvolva novas habilidades
-        e avance no seu aprendizado com a nossa plataforma.
+        Explore cursos, desenvolva novas habilidades e avance no seu aprendizado
+        com conteúdos organizados para estudar no seu próprio ritmo.
     </p>
-
     <a href="{% url 'catalogo' %}" class="button button-primary">
         Explorar cursos
     </a>
-
 </section>
-
 
 <section>
-
-    <h2>Comece a aprender agora!</h2>
-
-    <p class="page-description">
-        Encontre conteúdos organizados em módulos e aulas
-        para estudar no seu próprio ritmo.
-    </p>
-
-    <div class="page-actions">
-
-        <a href="{% url 'catalogo' %}" class="button button-primary">
-            Ver cursos disponíveis
-        </a>
-
-        {% if not user.is_authenticated %}
-
-            <a href="{% url 'cadastro' %}" class="button button-secondary">
-                Criar uma conta
-            </a>
-
-        {% else %}
-
-            <a href="{% url 'meus_cursos' %}" class="button button-secondary">
-                Meus cursos
-            </a>
-
-        {% endif %}
-
+    <div class="page-heading">
+        <h2>Aprenda no seu ritmo</h2>
+        <p class="page-description">
+            Encontre conteúdos organizados em módulos e aulas para transformar
+            curiosidade em conhecimento.
+        </p>
     </div>
-
+    <div class="course-grid">
+        <article class="course-card">
+            <h3>Explore cursos</h3>
+            <p>Descubra novos assuntos e escolha o próximo tema que deseja aprender.</p>
+            <a href="{% url 'catalogo' %}" class="button button-primary">Ver catálogo</a>
+        </article>
+        {% if user.is_authenticated %}
+            <article class="course-card">
+                <h3>Continue aprendendo</h3>
+                <p>Acesse os cursos em que você já está inscrito e retome seus estudos.</p>
+                <a href="{% url 'meus_cursos' %}" class="button button-secondary">Meus cursos</a>
+            </article>
+        {% else %}
+            <article class="course-card">
+                <h3>Faça parte</h3>
+                <p>Crie sua conta para se inscrever nos cursos e acompanhar seu aprendizado.</p>
+                <a href="{% url 'cadastro' %}" class="button button-secondary">Criar uma conta</a>
+            </article>
+        {% endif %}
+    </div>
 </section>
-
 {% endblock %}
