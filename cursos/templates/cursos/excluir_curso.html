@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Excluir curso{% endblock %}
+
+{% block content %}
+
+    <h1>Excluir curso</h1>
+
+    <p>Deseja realmente excluir o curso "{{ curso.titulo }}"?</p>
+
+    <p>Os módulos, aulas e inscrições desse curso também serão excluídos.</p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <button type="submit" class="button button-danger">
+            Confirmar exclusão
+        </button>
+
+        <a href="{% url 'gerenciar_cursos' %}"
+           class="button button-secondary">
+            Cancelar
+        </a>
+
+    </form>
+
+{% endblock %}

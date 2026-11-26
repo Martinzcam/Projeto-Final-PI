@@ -1,5 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
+from django.contrib.auth import get_user_model
+from cursos.models import Curso, Modulo, Aula
 
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
@@ -7,8 +10,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 from django.views.decorators.http import require_POST
 from django.utils.http import url_has_allowed_host_and_scheme
-
-from .forms import CadastroForm
+from .forms import CadastroForm, UsuarioForm
 
 
 def home(request):
@@ -131,3 +133,67 @@ def logout_usuario(request):
     )
 
     return redirect('accounts_home')
+
+@login_required
+def painel_admin(request):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    contexto = {
+        'total_usuarios': get_user_model().objects.count(),
+        'total_cursos': Curso.objects.count(),
+        'total_modulos': Modulo.objects.count(),
+        'total_aulas': Aula.objects.count(),
+    }
+
+    return render(
+        request,
+        'accounts/painel_admin.html',
+        contexto
+    )
+
+@login_required
+def gerenciar_usuarios(request):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    usuarios = get_user_model().objects.all()
+
+    return render(
+        request,
+        'accounts/gerenciar_usuarios.html',
+        {'usuarios': usuarios}
+    )
+
+
+@login_required
+def editar_usuario(request, usuario_id):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    usuario = get_object_or_404(
+        get_user_model(),
+        id=usuario_id
+    )
+
+    if usuario.is_staff or usuario.is_superuser:
+        raise PermissionDenied
+
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST, instance=usuario)
+
+        if form.is_valid():
+            form.save()
+            return redirect('gerenciar_usuarios')
+
+    else:
+        form = UsuarioForm(instance=usuario)
+
+    return render(
+        request,
+        'accounts/form_usuario.html',
+        {'form': form}
+    )

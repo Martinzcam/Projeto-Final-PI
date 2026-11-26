@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Gerenciar usuários{% endblock %}
+
+{% block content %}
+
+    <h1>Gerenciar usuários</h1>
+
+    <div class="page-actions">
+
+        <a href="{% url 'painel_admin' %}"
+           class="button button-secondary">
+            Voltar ao painel
+        </a>
+
+    </div>
+
+    <div class="course-grid">
+
+        {% for usuario in usuarios %}
+
+            <div class="course-card">
+
+                <h3>{{ usuario.username }}</h3>
+
+                <p>E-mail: {{ usuario.email }}</p>
+
+                {% if usuario.is_staff or usuario.is_superuser %}
+                    <p>Administrador</p>
+                {% else %}
+                    <p>Usuário comum</p>
+                {% endif %}
+
+                {% if usuario.is_active %}
+                    <p>Status: Ativo</p>
+                {% else %}
+                    <p>Status: Inativo</p>
+                {% endif %}
+
+                {% if not usuario.is_staff and not usuario.is_superuser %}
+
+                    <a href="{% url 'editar_usuario' usuario.id %}"
+                       class="button button-secondary">
+                        Editar usuário
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        {% empty %}
+
+            <p>Nenhum usuário cadastrado.</p>
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

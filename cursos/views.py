@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.db.models import Prefetch
+from django.core.exceptions import PermissionDenied
+from .forms import CursoForm, ModuloForm, AulaForm
 
 from .models import Curso, Modulo, Aula, Inscricao
 
@@ -243,5 +245,276 @@ def detalhe_aula(request, aula_id):
             'modulo': aula.modulo,
             'aula_anterior': aula_anterior,
             'proxima_aula': proxima_aula
+        }
+    )
+
+@login_required
+def gerenciar_cursos(request):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    cursos = Curso.objects.all()
+
+    return render(
+        request,
+        'cursos/gerenciar_cursos.html',
+        {'cursos': cursos}
+    )
+
+@login_required
+def criar_curso(request):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    if request.method == 'POST':
+
+        form = CursoForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('gerenciar_cursos')
+
+    else:
+        form = CursoForm()
+
+    return render(
+        request,
+        'cursos/form_curso.html',
+        {'form': form, 'titulo': 'Cadastrar curso'}
+    )
+
+@login_required
+def editar_curso(request, curso_id):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    curso = get_object_or_404(Curso, id=curso_id)
+
+    if request.method == 'POST':
+
+        form = CursoForm(request.POST, instance=curso)
+
+        if form.is_valid():
+            form.save()
+            return redirect('gerenciar_cursos')
+
+    else:
+        form = CursoForm(instance=curso)
+
+    return render(
+        request,
+        'cursos/form_curso.html',
+        {'form': form, 'titulo': 'Editar curso'}
+    )
+
+@login_required
+def excluir_curso(request, curso_id):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    curso = get_object_or_404(Curso, id=curso_id)
+
+    if request.method == 'POST':
+        curso.delete()
+        return redirect('gerenciar_cursos')
+
+    return render(
+        request,
+        'cursos/excluir_curso.html',
+        {'curso': curso}
+    )
+
+
+#Funções para as funcionalidades dos Módulos#
+
+@login_required
+def gerenciar_modulos(request):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    modulos = Modulo.objects.all()
+
+    return render(
+        request,
+        'cursos/gerenciar_modulos.html',
+        {'modulos': modulos}
+    )
+
+@login_required
+def criar_modulo(request):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    if request.method == 'POST':
+
+        form = ModuloForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('gerenciar_modulos')
+
+    else:
+        form = ModuloForm()
+
+    return render(
+        request,
+        'cursos/form_administrativo.html',
+        {
+            'form': form,
+            'titulo': 'Cadastrar módulo',
+            'voltar': 'gerenciar_modulos'
+        }
+    )
+
+@login_required
+def editar_modulo(request, modulo_id):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    modulo = get_object_or_404(Modulo, id=modulo_id)
+
+    if request.method == 'POST':
+
+        form = ModuloForm(request.POST, instance=modulo)
+
+        if form.is_valid():
+            form.save()
+            return redirect('gerenciar_modulos')
+
+    else:
+        form = ModuloForm(instance=modulo)
+
+    return render(
+        request,
+        'cursos/form_administrativo.html',
+        {
+            'form': form,
+            'titulo': 'Editar módulo',
+            'voltar': 'gerenciar_modulos'
+        }
+    )
+
+@login_required
+def excluir_modulo(request, modulo_id):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    modulo = get_object_or_404(Modulo, id=modulo_id)
+
+    if request.method == 'POST':
+        modulo.delete()
+        return redirect('gerenciar_modulos')
+
+    return render(
+        request,
+        'cursos/excluir_administrativo.html',
+        {
+            'objeto': modulo,
+            'titulo': 'Excluir módulo',
+            'aviso': 'As aulas deste módulo também serão excluídas.',
+            'voltar': 'gerenciar_modulos'
+        }
+    )
+
+@login_required
+def gerenciar_aulas(request):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    aulas = Aula.objects.all()
+
+    return render(
+        request,
+        'cursos/gerenciar_aulas.html',
+        {'aulas': aulas}
+    )
+
+#Funções para as funcionalidades das Aulas#
+
+@login_required
+def criar_aula(request):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    if request.method == 'POST':
+
+        form = AulaForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('gerenciar_aulas')
+
+    else:
+        form = AulaForm()
+
+    return render(
+        request,
+        'cursos/form_administrativo.html',
+        {
+            'form': form,
+            'titulo': 'Cadastrar aula',
+            'voltar': 'gerenciar_aulas'
+        }
+    )
+
+@login_required
+def editar_aula(request, aula_id):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    aula = get_object_or_404(Aula, id=aula_id)
+
+    if request.method == 'POST':
+
+        form = AulaForm(request.POST, instance=aula)
+
+        if form.is_valid():
+            form.save()
+            return redirect('gerenciar_aulas')
+
+    else:
+        form = AulaForm(instance=aula)
+
+    return render(
+        request,
+        'cursos/form_administrativo.html',
+        {
+            'form': form,
+            'titulo': 'Editar aula',
+            'voltar': 'gerenciar_aulas'
+        }
+    )
+
+@login_required
+def excluir_aula(request, aula_id):
+
+    if not request.user.is_staff:
+        raise PermissionDenied
+
+    aula = get_object_or_404(Aula, id=aula_id)
+
+    if request.method == 'POST':
+        aula.delete()
+        return redirect('gerenciar_aulas')
+
+    return render(
+        request,
+        'cursos/excluir_administrativo.html',
+        {
+            'objeto': aula,
+            'titulo': 'Excluir aula',
+            'aviso': 'Esta ação não poderá ser desfeita.',
+            'voltar': 'gerenciar_aulas'
         }
     )

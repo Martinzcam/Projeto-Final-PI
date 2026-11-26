@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Painel Administrativo{% endblock %}
+
+{% block content %}
+
+    <div class="page-heading">
+
+        <h1>Painel Administrativo</h1>
+
+        <p>Bem-vindo, {{ user.username }}!</p>
+
+        <p class="page-description">
+            Gerencie a plataforma Estude Mais.
+        </p>
+
+    </div>
+
+    <div class="course-grid">
+
+        <div class="course-card">
+
+            <h3>Usuários</h3>
+            <h2>{{ total_usuarios }}</h2>
+            <p>Usuários cadastrados</p>
+
+            <a href="{% url 'gerenciar_usuarios' %}"
+                class="button button-primary">
+                Gerenciar usuários
+            </a>
+
+        </div>
+
+        <div class="course-card">
+            <h3>Cursos</h3>
+            <h2>{{ total_cursos }}</h2>
+            <p>Cursos cadastrados</p>
+            <a href="{% url 'gerenciar_cursos' %}"
+                class="button button-primary">
+                Gerenciar cursos
+            </a>
+        </div>
+
+        <div class="course-card">
+
+            <h3>Módulos</h3>
+            <h2>{{ total_modulos }}</h2>
+            <p>Módulos cadastrados</p>
+
+            <a href="{% url 'gerenciar_modulos' %}"
+                class="button button-primary">
+                Gerenciar módulos
+            </a>
+
+        </div>
+
+        <div class="course-card">
+
+            <h3>Aulas</h3>
+            <h2>{{ total_aulas }}</h2>
+            <p>Aulas cadastradas</p>
+
+            <a href="{% url 'gerenciar_aulas' %}"
+                class="button button-primary">
+                Gerenciar aulas
+            </a>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <h2>Gerenciamento da plataforma</h2>
+
+    <p>Selecione o conteúdo que deseja administrar.</p>
+
+    <a href="{% url 'admin:index' %}"
+       class="button button-secondary">
+        Django Admin
+    </a>
+
+{% endblock %}
