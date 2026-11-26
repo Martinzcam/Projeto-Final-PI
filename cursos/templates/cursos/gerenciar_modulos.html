@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Gerenciar módulos{% endblock %}
+
+{% block content %}
+
+    <h1>Gerenciar módulos</h1>
+
+    <div class="page-actions">
+
+        <a href="{% url 'criar_modulo' %}"
+           class="button button-primary">
+            + Novo módulo
+        </a>
+
+        <a href="{% url 'painel_admin' %}"
+           class="button button-secondary">
+            Voltar ao painel
+        </a>
+
+    </div>
+
+    <div class="course-grid">
+
+        {% for modulo in modulos %}
+
+            <div class="course-card">
+
+                <h3>{{ modulo.titulo }}</h3>
+
+                <p>Curso: {{ modulo.curso.titulo }}</p>
+
+                <p>Ordem: {{ modulo.ordem }}</p>
+
+                <a href="{% url 'editar_modulo' modulo.id %}"
+                   class="button button-secondary">
+                    Editar
+                </a>
+
+                <a href="{% url 'excluir_modulo' modulo.id %}"
+                   class="button button-danger">
+                    Excluir
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <p>Nenhum módulo cadastrado.</p>
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

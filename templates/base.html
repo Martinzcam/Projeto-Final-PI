@@ -45,6 +45,14 @@
                         Meus cursos
                     </a>
 
+                    {% if user.is_staff %}
+
+                        <a href="{% url 'painel_admin' %}" class="nav-link">
+                            Administração
+                        </a>
+
+                    {% endif %}
+
                     <span class="nav-user">
                         Olá, {{ user.username }}
                     </span>

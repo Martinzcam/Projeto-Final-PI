@@ -28,4 +28,22 @@ urlpatterns = [
         name='logout'
     ),
 
+    path(
+        'administracao/',
+        views.painel_admin,
+        name='painel_admin'
+    ),
+
+    path(
+        'administracao/usuarios/',
+        views.gerenciar_usuarios,
+        name='gerenciar_usuarios'
+    ),
+
+    path(
+        'administracao/usuarios/<int:usuario_id>/editar/',
+        views.editar_usuario,
+        name='editar_usuario'
+    ),
+
 ]

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Gerenciar cursos{% endblock %}
+
+{% block content %}
+
+    <h1>Gerenciar cursos</h1>
+
+    <div class="page-actions">
+
+        <a href="{% url 'criar_curso' %}"
+           class="button button-primary">
+            + Novo curso
+        </a>
+
+        <a href="{% url 'painel_admin' %}"
+           class="button button-secondary">
+            Voltar ao painel
+        </a>
+
+    </div>
+
+    <div class="course-grid">
+
+        {% for curso in cursos %}
+
+            <div class="course-card">
+
+                <h3>{{ curso.titulo }}</h3>
+
+                <p>{{ curso.descricao|truncatewords:20 }}</p>
+
+                {% if curso.publicado %}
+                    <p>Publicado</p>
+                {% else %}
+                    <p>Não publicado</p>
+                {% endif %}
+
+                <a href="{% url 'editar_curso' curso.id %}"
+                   class="button button-secondary">
+                    Editar
+                </a>
+
+                <a href="{% url 'excluir_curso' curso.id %}"
+                   class="button button-danger">
+                    Excluir
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <p>Nenhum curso cadastrado.</p>
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

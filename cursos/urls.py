@@ -52,4 +52,79 @@ urlpatterns = [
         name='detalhe_aula'
     ),
 
+    path(
+        'gerenciar/',
+        views.gerenciar_cursos,
+        name='gerenciar_cursos'
+    ),
+
+    path(
+        'gerenciar/criar/',
+        views.criar_curso,
+        name='criar_curso'
+    ),
+
+    path(
+        'gerenciar/<int:curso_id>/editar/',
+        views.editar_curso,
+        name='editar_curso'
+    ),
+
+    path(
+        'gerenciar/<int:curso_id>/excluir/',
+        views.excluir_curso,
+        name='excluir_curso'
+    ),
+
+    # Gerenciamento de módulos
+
+    path(
+        'gerenciar/modulos/',
+        views.gerenciar_modulos,
+        name='gerenciar_modulos'
+    ),
+
+    path(
+        'gerenciar/modulos/criar/',
+        views.criar_modulo,
+        name='criar_modulo'
+    ),
+
+    path(
+        'gerenciar/modulos/<int:modulo_id>/editar/',
+        views.editar_modulo,
+        name='editar_modulo'
+    ),
+
+    path(
+        'gerenciar/modulos/<int:modulo_id>/excluir/',
+        views.excluir_modulo,
+        name='excluir_modulo'
+    ),
+
+    # Gerenciamento de aulas
+
+    path(
+        'gerenciar/aulas/',
+        views.gerenciar_aulas,
+        name='gerenciar_aulas'
+    ),
+
+    path(
+        'gerenciar/aulas/criar/',
+        views.criar_aula,
+        name='criar_aula'
+    ),
+
+    path(
+        'gerenciar/aulas/<int:aula_id>/editar/',
+        views.editar_aula,
+        name='editar_aula'
+    ),
+
+    path(
+        'gerenciar/aulas/<int:aula_id>/excluir/',
+        views.excluir_aula,
+        name='excluir_aula'
+    ),
 ]

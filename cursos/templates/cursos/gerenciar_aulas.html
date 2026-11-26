@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Gerenciar aulas{% endblock %}
+
+{% block content %}
+
+    <h1>Gerenciar aulas</h1>
+
+    <div class="page-actions">
+
+        <a href="{% url 'criar_aula' %}"
+           class="button button-primary">
+            + Nova aula
+        </a>
+
+        <a href="{% url 'painel_admin' %}"
+           class="button button-secondary">
+            Voltar ao painel
+        </a>
+
+    </div>
+
+    <div class="course-grid">
+
+        {% for aula in aulas %}
+
+            <div class="course-card">
+
+                <h3>{{ aula.titulo }}</h3>
+
+                <p>Curso: {{ aula.modulo.curso.titulo }}</p>
+
+                <p>Módulo: {{ aula.modulo.titulo }}</p>
+
+                <p>Ordem: {{ aula.ordem }}</p>
+
+                <a href="{% url 'editar_aula' aula.id %}"
+                   class="button button-secondary">
+                    Editar
+                </a>
+
+                <a href="{% url 'excluir_aula' aula.id %}"
+                   class="button button-danger">
+                    Excluir
+                </a>
+
+            </div>
+
+        {% empty %}
+
+            <p>Nenhuma aula cadastrada.</p>
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

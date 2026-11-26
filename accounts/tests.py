@@ -246,3 +246,86 @@ class TestesAutenticacao(TestCase):
             response,
             reverse('accounts_home')
         )
+
+class PainelAdministrativoTests(TestCase):
+
+    def setUp(self):
+
+        User = get_user_model()
+
+        self.admin = User.objects.create_user(
+            username='admin_teste',
+            password='senha123',
+            is_staff=True
+        )
+
+        self.aluno = User.objects.create_user(
+            username='aluno_teste',
+            password='senha123'
+        )
+
+    def test_admin_acessa_painel(self):
+
+        self.client.force_login(self.admin)
+
+        response = self.client.get(reverse('painel_admin'))
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_aluno_nao_acessa_painel(self):
+
+        self.client.force_login(self.aluno)
+
+        response = self.client.get(reverse('painel_admin'))
+
+        self.assertEqual(response.status_code, 403)
+
+    def test_visitante_nao_acessa_painel(self):
+
+        response = self.client.get(reverse('painel_admin'))
+
+        self.assertEqual(response.status_code, 302)
+
+    def test_aluno_nao_acessa_gerenciamento(self):
+
+        self.client.force_login(self.aluno)
+
+        paginas = [
+            'gerenciar_cursos',
+            'gerenciar_modulos',
+            'gerenciar_aulas',
+            'gerenciar_usuarios'
+        ]
+
+        for pagina in paginas:
+
+            response = self.client.get(reverse(pagina))
+
+            self.assertEqual(response.status_code, 403)
+
+    def test_admin_acessa_gerenciamento(self):
+
+        self.client.force_login(self.admin)
+
+        paginas = [
+            'gerenciar_cursos',
+            'gerenciar_modulos',
+            'gerenciar_aulas',
+            'gerenciar_usuarios'
+        ]
+
+        for pagina in paginas:
+
+            response = self.client.get(reverse(pagina))
+
+            self.assertEqual(response.status_code, 200)
+
+    def test_conta_administrativa_protegida(self):
+
+        self.client.force_login(self.admin)
+
+        response = self.client.get(
+            reverse('editar_usuario', args=[self.admin.id])
+        )
+
+        self.assertEqual(response.status_code, 403)

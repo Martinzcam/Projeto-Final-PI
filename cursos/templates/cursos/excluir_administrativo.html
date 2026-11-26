@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+
+    <h1>{{ titulo }}</h1>
+
+    <p>Deseja realmente excluir "{{ objeto }}"?</p>
+
+    <p>{{ aviso }}</p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <button type="submit" class="button button-danger">
+            Confirmar exclusão
+        </button>
+
+        <a href="{% url voltar %}"
+           class="button button-secondary">
+            Cancelar
+        </a>
+
+    </form>
+
+{% endblock %}
